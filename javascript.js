@@ -17,8 +17,9 @@ function getHumanChoice() {
 }
 
 /**Declaring the players score variables */
-const humanScore = 0
-const computerScore = 0
+let humanScore = 0
+let computerScore = 0
+let tieNumber = 0
 
 
 /**Writing the logic to play a single round */
@@ -27,42 +28,40 @@ function playRound() {
   const computerChoice = getComputerChoice();
   const humanChoice = getHumanChoice();
 
+  console.log("--- New Round ---");
   console.log("Computer chose:", computerChoice);
   console.log("You chose:", humanChoice);
 
   // Checking for a draw first
   if (computerChoice === humanChoice) {
+    tieNumber++
     return "It's a draw!";
-  }
-
-  // Checking for computer win conditions
-  if (
+  } else if (
     (computerChoice === "rock" && humanChoice === "scissors") ||
     (computerChoice === "paper" && humanChoice === "rock") ||
     (computerChoice === "scissors" && humanChoice === "paper")
   ) {
+    computerScore++;
     return "Computer Wins!";
-  }
-
+  } else
+  humanScore++;
   return "Human Wins!";
 }
 
-// *** Call the outcome function to start the game and see the result
-console.log(playRound());
-
 /*Writing the logic to play the entire game*/
-function playGame() {
-
-}
-
-/*
-for (let i = 1; i <= answer; i++) {
-  if (i % 3 === 0) {
-    console.log("Fizz");
-  } else if (i % 5 === 0) {
-    console.log("Buzz");
-  } else {
-    console.log(i);
+function playGame(numberOfRounds) {
+  for (let i = 0; i < numberOfRounds; i++) {
+    const roundResult = playRound(); 
+    console.log(`Round ${i + 1} Result: ${roundResult}`);
+    console.log(`Current Score: Human ${humanScore} | Computer ${computerScore} | Ties ${tieNumber}`);
   }
 }
-*/
+  // Announce final results after all rounds are played
+  console.log("\n--- Final Game Results ---");
+  console.log("Your Total Score: " + humanScore);
+  console.log("Computer's Total Score: " + computerScore);
+  console.log("Tied games: " + tieNumber);
+
+
+let rounds = parseInt(prompt("How many rounds do you want to play?"));
+playGame(rounds);
